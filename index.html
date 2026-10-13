@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#23452f">
+<title>Melon Patch 🍉</title>
+<style>
+  :root {
+    --green: #23452f;
+    --muted: #65735e;
+    --cream: #faf7ed;
+    --pink: #e86676;
+    --line: #dce2ce;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--green);
+    font: 16px/1.6 system-ui, sans-serif;
+  }
+
+  button, input { font: inherit; }
+  button { cursor: pointer; }
+  a { color: inherit; }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  summary:focus-visible {
+    outline: 3px solid var(--pink);
+    outline-offset: 5px;
+  }
+
+  header, main, footer {
+    max-width: 1120px;
+    margin: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  header {
+    height: 88px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .logo {
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 850;
+    letter-spacing: -1px;
+  }
+
+  .logo span { color: var(--pink); }
+
+  nav { display: flex; gap: 24px; }
+  nav a { font-size: 14px; text-decoration: none; }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 30px;
+    padding: 52px 0;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 750;
+  }
+
+  h1, h2, h3 {
+    font-family: Georgia, serif;
+    font-weight: 500;
+    line-height: 1.08;
+  }
+
+  h1 {
+    margin: 16px 0 24px;
+    font-size: clamp(48px, 7vw, 78px);
+    letter-spacing: -3px;
+  }
+
+  h1 em { color: var(--pink); }
+
+  .intro {
+    max-width: 420px;
+    color: var(--muted);
+  }
+
+  .primary {
+    display: inline-block;
+    margin-top: 12px;
+    background: var(--green);
+    color: white;
+    border: 0;
+    border-radius: 8px;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .hero-art {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 330px;
+    background: radial-gradient(ellipse, #e8eccb 60%, transparent 61%);
+  }
+
+  .hero-art svg {
+    width: 100%;
+    transform: rotate(-10deg);
+    filter: drop-shadow(0 20px 12px #23452f18);
+  }
+
+  .note {
+    position: absolute;
+    bottom: 0;
+    right: 14px;
+    font: italic 18px Georgia, serif;
+    transform: rotate(-6deg);
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 48px;
+  }
+
+  .facts div { padding: 0 20px; border-left: 1px solid var(--line); }
+  .facts div:first-child { padding-left: 0; border: 0; }
+  .facts strong { display: block; font: 22px Georgia, serif; }
+  .facts small { font-size: 12px; color: var(--muted); }
+
+  h2 { font-size: 36px; margin: 10px 0; }
+  .subtitle { color: var(--muted); margin: 0 0 24px; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+
+  .card {
+    text-align: left;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    overflow: hidden;
+    color: var(--green);
+    background: #fffdf6;
+    box-shadow: 0 0 0 1px var(--line);
+    transition: transform .2s, box-shadow .2s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 24px #23452f15;
+  }
+
+  .card[aria-pressed="true"] { border-color: var(--green); }
+  .card-art { padding: 12px; background: #eaf0dc; }
+  .card:nth-child(2) .card-art { background: #f8e5dc; }
+  .card:nth-child(3) .card-art { background: #f7efc8; }
+  .card:nth-child(4) .card-art { background: #e6e8da; }
+  .card-art svg { width: 100%; display: block; }
+
+  .card-body { padding: 16px; }
+  .tag { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; }
+  .card h3 { font-size: 24px; margin: 10px 0; }
+  .card p { min-height: 42px; font-size: 12px; color: var(--muted); }
+  .card-bottom { display: flex; justify-content: space-between; font-size: 11px; }
+
+  .guide {
+    margin-top: 42px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fffdf7;
+    scroll-margin-top: 20px;
+  }
+
+  aside { background: #e9efd7; padding: 28px; }
+  aside h2 { font-size: 34px; }
+  aside p { font-size: 13px; }
+  .badge {
+    display: inline-block;
+    border: 1px solid #b7c5a6;
+    border-radius: 20px;
+    padding: 4px 9px;
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .tip { border-top: 1px solid #cbd5b9; padding-top: 16px; }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-top: 24px;
+  }
+
+  progress { width: 100%; height: 9px; accent-color: var(--green); }
+  .save-note { color: var(--muted); font-size: 11px; }
+
+  .reset {
+    border: 0;
+    background: none;
+    color: var(--green);
+    padding: 5px 0;
+    text-decoration: underline;
+    font-size: 12px;
+  }
+
+  .guide-content { padding: 28px; }
+  .guide-title { display: flex; justify-content: space-between; align-items: center; }
+  .guide-title h3 { font-size: 28px; margin: 0 0 20px; }
+
+  .print {
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--green);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  details { border-top: 1px solid var(--line); }
+
+  summary {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    list-style: none;
+    cursor: pointer;
+    padding: 17px 0;
+    font-size: 14px;
+    font-weight: 650;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; margin-left: auto; font-size: 20px; }
+  details[open] summary::after { content: "−"; }
+  .number { color: #81906a; font-size: 11px; }
+  .step-body { padding: 0 0 20px 28px; color: #586450; font-size: 13px; }
+  .step-body p { margin-top: 0; }
+
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .check input { width: 18px; height: 18px; accent-color: var(--green); }
+
+  .sweet {
+    margin: 40px 0;
+    padding: 30px;
+    background: var(--green);
+    color: var(--cream);
+    border-radius: 15px;
+  }
+
+  .sweet h2 { font-size: 32px; }
+  .sweet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .sweet-grid strong { color: #e0eaa9; font-size: 14px; }
+  .sweet-grid p { font-size: 13px; color: #d5dfcf; }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    padding-bottom: 24px;
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    background: var(--green);
+    color: white;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    box-shadow: 0 5px 20px #0002;
+    z-index: 5;
+  }
+
+  .toast:empty { display: none; }
+
+  @media (max-width: 800px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .guide { grid-template-columns: 235px 1fr; }
+    .hero-art { min-height: 270px; }
+  }
+
+  @media (max-width: 580px) {
+    header { height: 74px; }
+    nav { gap: 14px; }
+    nav a { font-size: 12px; }
+    .hero { grid-template-columns: 1fr; padding: 32px 0; }
+    .hero-art { min-height: 260px; }
+    .hero-art svg { max-width: 360px; }
+    h1 { font-size: 58px; }
+    .facts div { padding: 0 10px; }
+    .facts strong { font-size: 18px; }
+    .facts small { font-size: 10px; }
+    .cards { gap: 11px; }
+    .card-body { padding: 12px; }
+    .card h3 { font-size: 21px; }
+    .card p { min-height: 58px; }
+    .guide { display: block; }
+    aside, .guide-content { padding: 22px; }
+    .sweet-grid { grid-template-columns: 1fr; gap: 12px; }
+    .step-body { padding-left: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+
+  @media print {
+    header, .hero, .facts, #varieties, footer,
+    .print, .reset, .check, .toast, .save-note,
+    progress, .progress-label { display: none !important; }
+    body { background: white; }
+    main { padding: 0; }
+    .guide { display: block; margin: 0; border: 0; }
+    aside, .guide-content { background: white; padding: 10px; }
+    details { break-inside: avoid; }
+    .sweet { background: white; color: black; padding: 10px; }
+    .sweet-grid strong, .sweet-grid p { color: black; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">melon<span>patch</span> ✳</a>
+  <nav aria-label="Main navigation">
+    <a href="#varieties">The varieties</a>
+    <a href="#guide">Growing guide</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <p class="eyebrow">A little dirt. A lot of sunshine.</p>
+      <h1>Grow a<br><em>sweeter</em> summer.</h1>
+      <p class="intro">
+        From the first seed to that first juicy slice.
+        Find your watermelon and give it a great place to grow.
+      </p>
+      <a class="primary" href="#varieties">Find your melon ↗</a>
+    </div>
+    <div class="hero-art">
+      <div id="heroMelon" aria-hidden="true"></div>
+      <span class="note">Good things grow slowly.</span>
+    </div>
+  </section>
+
+  <div class="facts">
+    <div><strong>8+ hours</strong><small>Aim for generous daily sun</small></div>
+    <div><strong>Warm roots</strong><small>Soil near 21°C / 70°F</small></div>
+    <div><strong>Worth the wait</strong><small>Let fruit ripen on the vine</small></div>
+  </div>
+
+  <section id="varieties">
+    <p class="eyebrow">01 / Pick your patch companion</p>
+    <h2>Meet the melons.</h2>
+    <p class="subtitle">Click a variety to explore its growing guide.</p>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="guide" id="guide" aria-label="Selected variety growing guide">
+    <aside>
+      <p class="eyebrow">Your field guide</p>
+      <h2 id="varietyName"></h2>
+      <span class="badge" id="varietyDays"></span>
+      <p id="varietyDescription"></p>
+      <p class="tip" id="varietyTip"></p>
+      <div class="progress-label">
+        <span>Your checklist</span>
+        <span id="progressText" aria-live="polite">0 / 8</span>
+      </div>
+      <progress id="progress" max="8" value="0"
+        aria-label="Growing checklist completion"></progress>
+      <p class="save-note" id="saveNote">Saved on this browser for each variety.</p>
+      <button class="reset" id="reset">Reset this checklist</button>
+    </aside>
+
+    <div class="guide-content">
+      <div class="guide-title">
+        <h3>Seed to sweet.</h3>
+        <button class="print" id="print">Print guide ↗</button>
+      </div>
+      <div id="steps"></div>
+    </div>
+  </section>
+
+  <section class="sweet">
+    <p class="eyebrow">The sweetness secret</p>
+    <h2>Grow the plant. Let it make the sugar.</h2>
+    <div class="sweet-grid">
+      <div>
+        <strong>Keep leaves thriving</strong>
+        <p>Healthy, sunlit leaves make sugars. Protect the canopy and avoid unnecessary pruning.</p>
+      </div>
+      <div>
+        <strong>Skip the sugar water</strong>
+        <p>Sugar or honey in the soil does not reliably sweeten fruit. Good growing conditions do.</p>
+      </div>
+      <div>
+        <strong>Be patiently picky</strong>
+        <p>Harvest fully ripe. A picked watermelon will not get sweeter on the kitchen counter.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>melonpatch — works offline, grows with you.</span>
+  <span>Timing varies. Follow your seed packet.</span>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+"use strict";
+
+const varieties = [
+  {
+    id: "sugar",
+    name: "Sugar Baby",
+    tag: "The small-fruit classic",
+    days: "About 75–85 days",
+    description: "A round, dark-rinded icebox melon with crisp red flesh.",
+    tip: "Small fruit does not mean a small vine. Give it space to trail, or use a strong trellis with individual fruit slings.",
+    spacing: "Allow about 90 cm / 3 ft between plants and 1.8–2.4 m / 6–8 ft between rows.",
+    flesh: "#ee6573",
+    rind: "#294d35",
+    stripe: "#416444"
+  },
+  {
+    id: "crimson",
+    name: "Crimson Sweet",
+    tag: "The picnic favorite",
+    days: "About 80–95 days",
+    description: "A generous striped melon with juicy red flesh, made for sharing.",
+    tip: "Plan for vigorous vines and heavy fruit. Let it grow on the ground and rest melons on dry straw or a board.",
+    spacing: "Allow about 90–120 cm / 3–4 ft between plants and 1.8–2.4 m / 6–8 ft between rows.",
+    flesh: "#e95665",
+    rind: "#7ba653",
+    stripe: "#35613b"
+  },
+  {
+    id: "yellow",
+    name: "Yellow Doll",
+    tag: "A golden surprise",
+    days: "About 65–75 days",
+    description: "An early hybrid with sunny yellow flesh and smaller fruit.",
+    tip: "Yellow flesh is natural for this variety. Start checking early, but use several ripeness signs before harvesting.",
+    spacing: "Allow about 90 cm / 3 ft between plants and 1.8 m / 6 ft between rows, or follow your packet.",
+    flesh: "#f0c848",
+    rind: "#87aa5b",
+    stripe: "#3a673d"
+  },
+  {
+    id: "moon",
+    name: "Moon & Stars",
+    tag: "The heirloom wonder",
+    days: "About 90–100+ days",
+    description: "A dark heirloom melon scattered with beautiful yellow speckles.",
+    tip: "Yellow spots on the rind and foliage are normal. Size and maturity vary by strain, so check your seed supplier’s guidance.",
+    spacing: "Reserve a generous patch: about 120 cm / 4 ft between plants and 2.4 m / 8 ft between rows.",
+    flesh: "#e96876",
+    rind: "#254834",
+    stripe: "#3a5b3e"
+  }
+];
+
+const $ = id => document.getElementById(id);
+
+function melonSVG(v) {
+  const stars = v.id === "moon" ? `
+    <g fill="#e8d36a">
+      <circle cx="104" cy="88" r="10"/>
+      <circle cx="74" cy="66" r="3"/>
+      <circle cx="151" cy="68" r="4"/>
+      <circle cx="163" cy="109" r="3"/>
+      <circle cx="75" cy="118" r="4"/>
+    </g>` : "";
+
+  return `
+    <svg viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true">
+      <ellipse cx="160" cy="180" rx="128" ry="11"
+        fill="#23452f" opacity=".08"/>
+      <ellipse cx="125" cy="102" rx="88" ry="70" fill="${v.rind}"/>
+      <g fill="none" stroke="${v.stripe}" stroke-width="12">
+        <path d="M111 34 C53 72 58 132 112 170"/>
+        <path d="M134 33 C108 74 109 134 136 171"/>
+        <path d="M153 37 C174 77 174 133 154 168"/>
+      </g>
+      ${stars}
+      <path d="M125 33 Q121 17 138 15" fill="none"
+        stroke="#56734b" stroke-width="5" stroke-linecap="round"/>
+      <g transform="rotate(-16 213 128)">
+        <path d="M114 94 H310 A98 98 0 0 1 114 94" fill="#315b38"/>
+        <path d="M120 94 H304 A92 92 0 0 1 120 94" fill="#b7ce7e"/>
+        <path d="M127 94 H297 A85 85 0 0 1 127 94" fill="#f5e9bd"/>
+        <path d="M132 94 H292 A80 80 0 0 1 132 94" fill="${v.flesh}"/>
+        <g fill="#3b302b">
+          <ellipse cx="157" cy="109" rx="3" ry="6"
+            transform="rotate(-40 157 109)"/>
+          <ellipse cx="182" cy="131" rx="3" ry="6"
+            transform="rotate(-20 182 131)"/>
+          <ellipse cx="212" cy="148" rx="3" ry="6"/>
+          <ellipse cx="239" cy="132" rx="3" ry="6"
+            transform="rotate(20 239 132)"/>
+          <ellipse cx="265" cy="109" rx="3" ry="6"
+            transform="rotate(40 265 109)"/>
+          <ellipse cx="212" cy="109" rx="3" ry="6"/>
+        </g>
+      </g>
+    </svg>`;
+}
+
+function growingSteps(v) {
+  return [
+    {
+      title: "Choose a sunny home",
+      text: `Choose an open spot with at least 6 hours of direct sun;
+        aim for 8 or more. Warmth and healthy leaves help the plant
+        make sugars. Wait until frost risk has passed. In tropical
+        climates, avoid a planting period with prolonged waterlogging.`,
+      check: "I have chosen a sunny, warm spot"
+    },
+    {
+      title: "Prepare the soil",
+      text: `Use fertile, well-drained soil with a target pH around
+        6.0–6.8. Mix in finished compost, and use raised beds if drainage
+        is poor. A soil test helps you decide whether lime or fertilizer
+        is needed. Avoid fresh manure and soggy low spots.`,
+      check: "My soil is prepared and drains well"
+    },
+    {
+      title: "Sow and make room",
+      text: `${v.spacing} Your seed packet takes priority.
+        Sow about 2–2.5 cm / ¾–1 inch deep when soil is near
+        21°C / 70°F. Keep the seed zone moist. For a head start, sow
+        indoors 3–4 weeks before planting outside, then harden seedlings
+        gradually and transplant without disturbing their roots.
+        Maturity estimates vary with weather and may be counted from
+        sowing or transplanting.`,
+      check: "My seeds or seedlings are planted"
+    },
+    {
+      title: "Water steadily",
+      text: `Check moisture a few centimetres below the surface.
+        Keep the root zone evenly moist through establishment,
+        flowering and fruit growth. Water deeply at soil level,
+        preferably in the morning. About 25–50 mm / 1–2 inches of rain
+        plus irrigation over 7–10 days is a starting guide in dry
+        weather; adjust for soil and heat. Near ripeness, ease back
+        only if the soil stays moist. Never force wilting to increase
+        sweetness, and avoid soaking plants after a long dry spell.`,
+      check: "I have a soil-moisture checking routine"
+    },
+    {
+      title: "Feed for balanced growth",
+      text: `Follow a soil test and the fertilizer label for the
+        amount and timing. Add recommended nutrients before planting,
+        then reassess as vines grow. Keep fertilizer away from stems.
+        Excess nitrogen can produce lush leaves at the expense of
+        fruit. Extra phosphorus or potassium will not automatically
+        make melons sweeter if the soil already has enough.`,
+      check: "My feeding plan follows soil needs"
+    },
+    {
+      title: "Help with pollination",
+      text: `Female flowers have a tiny melon behind them; male
+        flowers have a thin stem. Bees carry pollen between them.
+        If bees are scarce, use a freshly opened male flower on a dry
+        morning: peel back its petals and gently touch its pollen-bearing
+        centre to all lobes of a newly opened female flower’s stigma.
+        Remove row covers when flowering starts and avoid spraying
+        insecticides onto open flowers. All four varieties here are
+        seeded; seedless varieties also need a suitable seeded pollenizer.`,
+      check: "I know how to support pollination"
+    },
+    {
+      title: "Protect leaves and fruit",
+      text: `Healthy leaves are the plant’s sugar factory.
+        Avoid unnecessary pruning and inspect leaves and stems
+        regularly for pests or disease. Rest growing fruit on dry
+        straw or a board to keep it off wet soil. Use breathable
+        fruit slings if trellising. Do not twist or pull the stems.`,
+      check: "My vines and fruit are protected"
+    },
+    {
+      title: "Check ripeness and harvest",
+      text: `Look for several signs together: a creamy-yellow ground
+        spot, a duller rind and a drying tendril nearest the fruit.
+        The tendril can dry early, so do not rely on it alone.
+        Tapping is also unreliable. Use the seed packet’s maturity
+        window as a clue, not a deadline. Cut the stem with clean
+        pruners, leaving a short stub. Watermelons do not continue
+        ripening after picking.
+        ${v.id === "moon"
+          ? "Do not confuse Moon & Stars’ natural yellow speckles with the larger ground-contact spot."
+          : ""}`,
+      check: "I have checked multiple ripeness signs"
+    }
+  ];
+}
+
+let selected = "sugar";
+let saved = {};
+let storageAvailable = true;
+
+try {
+  const value = JSON.parse(localStorage.getItem("melon-patch") || "{}");
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    saved = value;
+  }
+} catch {
+  storageAvailable = false;
+}
+
+function checkedSteps() {
+  return Array.isArray(saved[selected])
+    ? saved[selected].filter(n => Number.isInteger(n) && n >= 0 && n < 8)
+    : [];
+}
+
+function updateProgress() {
+  const count = new Set(checkedSteps()).size;
+  $("progress").value = count;
+  $("progressText").textContent = `${count} / 8`;
+  $("saveNote").textContent = storageAvailable
+    ? "Saved on this browser for each variety."
+    : "Checklist works this session; browser storage is unavailable.";
+}
+
+function save() {
+  try {
+    localStorage.setItem("melon-patch", JSON.stringify(saved));
+  } catch {
+    storageAvailable = false;
+  }
+  updateProgress();
+}
+
+let toastTimer;
+
+function notify(message) {
+  $("toast").textContent = message;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    $("toast").textContent = "";
+  }, 2500);
+}
+
+function selectVariety(id, scroll = false) {
+  selected = id;
+  const variety = varieties.find(v => v.id === id);
+
+  $("varietyName").textContent = variety.name;
+  $("varietyDays").textContent = variety.days;
+  $("varietyDescription").textContent = variety.description;
+  $("varietyTip").textContent = variety.tip;
+
+  document.querySelectorAll(".card").forEach(card => {
+    card.setAttribute("aria-pressed", String(card.dataset.id === id));
+  });
+
+  $("steps").innerHTML = growingSteps(variety).map((step, i) => `
+    <details ${i === 0 ? "open" : ""}>
+      <summary>
+        <span class="number">0${i + 1}</span>
+        ${step.title}
+      </summary>
+      <div class="step-body">
+        <p>${step.text}</p>
+        <label class="check">
+          <input type="checkbox" data-step="${i}"
+            ${checkedSteps().includes(i) ? "checked" : ""}>
+          ${step.check}
+        </label>
+      </div>
+    </details>
+  `).join("");
+
+  updateProgress();
+
+  if (scroll) {
+    $("guide").scrollIntoView({
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant" : "smooth",
+      block: "start"
+    });
+    notify(`${variety.name} guide selected`);
+  }
+}
+
+$("heroMelon").innerHTML = melonSVG(varieties[1]);
+
+$("cards").innerHTML = varieties.map(v => `
+  <button class="card" data-id="${v.id}"
+    aria-pressed="false" aria-controls="guide">
+    <div class="card-art">${melonSVG(v)}</div>
+    <div class="card-body">
+      <span class="tag">${v.tag}</span>
+      <h3>${v.name}</h3>
+      <p>${v.description}</p>
+      <div class="card-bottom">
+        <span>${v.days.replace("About ", "")}</span>
+        <span>Grow this →</span>
+      </div>
+    </div>
+  </button>
+`).join("");
+
+$("cards").addEventListener("click", event => {
+  const card = event.target.closest("button[data-id]");
+  if (card) selectVariety(card.dataset.id, true);
+});
+
+$("steps").addEventListener("change", event => {
+  const input = event.target;
+  if (!input.matches("input[data-step]")) return;
+
+  const step = Number(input.dataset.step);
+  const updated = checkedSteps().filter(n => n !== step);
+
+  if (input.checked) updated.push(step);
+  saved[selected] = [...new Set(updated)];
+  save();
+});
+
+$("reset").addEventListener("click", () => {
+  saved[selected] = [];
+  save();
+  selectVariety(selected);
+  notify("Checklist reset for this variety");
+});
+
+let printState = [];
+
+window.addEventListener("beforeprint", () => {
+  const sections = [...document.querySelectorAll("#steps details")];
+  printState = sections.map(section => section.open);
+  sections.forEach(section => section.open = true);
+});
+
+window.addEventListener("afterprint", () => {
+  document.querySelectorAll("#steps details").forEach((section, i) => {
+    section.open = printState[i] ?? false;
+  });
+});
+
+$("print").addEventListener("click", () => window.print());
+
+selectVariety(selected);
+</script>
+</body>
+</html>
